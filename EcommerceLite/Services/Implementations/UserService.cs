@@ -42,7 +42,7 @@ public class UserService(ApplicationDbContext context, IMapper mapper) : IUserSe
         _context.Add(user);
         await _context.SaveChangesAsync();
 
-        var createdUser = _context.Users.FindAsync(user.Id);
+        var createdUser = await _context.Users.FindAsync(user.Id);
         return _mapper.Map<UserReadDto>(createdUser);
     }
 
