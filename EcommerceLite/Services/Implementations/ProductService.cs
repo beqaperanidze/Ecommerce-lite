@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EcommerceLite.Services.Implementations;
 
-public class ProductService(ApplicationDbContext context, IMapperBase mapper) : IProductService
+public class ProductService(ApplicationDbContext context, IMapper mapper) : IProductService
 {
     private readonly ApplicationDbContext _context = context;
-    private readonly IMapperBase _mapper = mapper;
+    private readonly IMapper _mapper = mapper;
     public async Task<IEnumerable<ProductReadDto>> GetAllProductsAsync()
     {
         var products = await _context.Products

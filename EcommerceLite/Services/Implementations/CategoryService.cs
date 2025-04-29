@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EcommerceLite.Services.Implementations;
 
-public class CategoryService(ApplicationDbContext context, IMapperBase mapper)
+public class CategoryService(ApplicationDbContext context, IMapper mapper)
     : ICategoryService
 {
     private readonly ApplicationDbContext _context = context;
-    private readonly IMapperBase _mapper = mapper;
+    private readonly IMapper _mapper = mapper;
     public async Task<IEnumerable<CategoryDto>> GetAllCategoriesAsync()
     {
         var categories = await _context.Categories.ToListAsync();

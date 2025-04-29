@@ -6,10 +6,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EcommerceLite.Services.Implementations;
 
-public class UserService(ApplicationDbContext context, Mapper mapper) : IUserService
+public class UserService(ApplicationDbContext context, IMapper mapper) : IUserService
 {
     private readonly ApplicationDbContext _context = context;
-    private readonly Mapper _mapper = mapper;
+    private readonly IMapper _mapper = mapper;
 
 
     public async Task<IEnumerable<UserReadDto>> GetAllUsersAsync()
