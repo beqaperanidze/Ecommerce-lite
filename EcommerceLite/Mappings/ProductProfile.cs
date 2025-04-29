@@ -1,6 +1,16 @@
-﻿namespace EcommerceLite.Mappings;
+﻿using AutoMapper;
+using EcommerceLite.DTOs;
+using EcommerceLite.Models;
 
-public class ProductProfile
+namespace EcommerceLite.Mappings;
+
+public class ProductProfile : Profile
 {
-    
+    public ProductProfile()
+    {
+        CreateMap<Product, ProductReadDto>()
+            .ForMember(dest => dest.CategoryName,
+                opt => opt.MapFrom(src => src.Category.Name));
+        CreateMap<ProductCreateDto, Product>();
+    }
 }
