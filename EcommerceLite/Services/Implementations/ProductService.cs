@@ -11,6 +11,7 @@ public class ProductService(ApplicationDbContext context, IMapper mapper) : IPro
 {
     private readonly ApplicationDbContext _context = context;
     private readonly IMapper _mapper = mapper;
+
     public async Task<IEnumerable<ProductReadDto>> GetAllProductsAsync()
     {
         var products = await _context.Products
@@ -45,7 +46,7 @@ public class ProductService(ApplicationDbContext context, IMapper mapper) : IPro
         _context.Products.Add(product);
         await _context.SaveChangesAsync();
 
-        var createdProduct = _context.Products
+        var createdProduct = await _context.Products
             .Include(p => p.Category)
             .FirstOrDefaultAsync(p => p.Id == product.Id);
 
@@ -91,7 +92,7 @@ public class ProductService(ApplicationDbContext context, IMapper mapper) : IPro
             .Where(p => p.Name.Contains(searchTerm) || p.Description.Contains(searchTerm))
             .Include(p => p.Category)
             .ToListAsync();
-        
-        return _mapper.Map<IEnumerable<ProductReadDto>>(products); 
+
+        return _mapper.Map<IEnumerable<ProductReadDto>>(products);
     }
 }
