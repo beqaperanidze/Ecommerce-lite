@@ -1,11 +1,13 @@
 ﻿using EcommerceLite.DTOs;
 using EcommerceLite.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EcommerceLite.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class ProductController(IProductService productService) : ControllerBase
 {
     private readonly IProductService _productService = productService;
@@ -37,8 +39,9 @@ public class ProductController(IProductService productService) : ControllerBase
         var createdProduct = await _productService.CreateProductAsync(productDto);
         return CreatedAtAction(nameof(GetProductById), new { id = createdProduct.Id }, createdProduct);
     }
-
+    
     [HttpPut("{id}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> UpdateProduct(int id, ProductCreateDto productDto)
     {
         var result = await _productService.UpdateProductAsync(id, productDto);
@@ -46,6 +49,7 @@ public class ProductController(IProductService productService) : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [HttpPut("{id}")]
     public async Task<IActionResult> DeleteProduct(int id)
     {
         var result = await _productService.DeleteProductAsync(id);

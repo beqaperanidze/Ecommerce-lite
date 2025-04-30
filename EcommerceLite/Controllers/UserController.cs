@@ -7,7 +7,7 @@ namespace EcommerceLite.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-
+    [Authorize]
     public class UsersController(IUserService userService) : ControllerBase
     {
         private readonly IUserService _userService = userService;
@@ -41,6 +41,7 @@ namespace EcommerceLite.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<UserReadDto>> CreateUser(UserRegisterDto userDto)
         {
             var createdUser = await _userService.CreateUserAsync(userDto);
@@ -48,6 +49,7 @@ namespace EcommerceLite.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateUser(int id, UserRegisterDto userDto)
         {
             var result = await _userService.UpdateUserAsync(id, userDto);
@@ -55,6 +57,7 @@ namespace EcommerceLite.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUser(int id)
         {
             var result = await _userService.DeleteUserAsync(id);
